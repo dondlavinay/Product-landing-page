@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Landing Page</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon"><!-- Added favicon -->
+    <script>
+        const themes = [
+            { name: 'Light', class: '', icon: '🌙' },
+            { name: 'Dark', class: 'dark-mode', icon: '☀️' },
+            { name: 'Blue', class: 'blue-mode', icon: '💧' },
+            { name: 'Green', class: 'green-mode', icon: '🌿' }
+        ];
+        let currentTheme = 0;
+        function setTheme(idx) {
+            currentTheme = idx;
+            document.body.className = themes[currentTheme].class;
+            localStorage.setItem('theme', themes[currentTheme].name);
+            document.getElementById('theme-icon').textContent = themes[currentTheme].icon;
+            document.getElementById('theme-list').style.display = 'none';
+        }
+        function toggleThemeDropdown(e) {
+            e.preventDefault();
+            const list = document.getElementById('theme-list');
+            list.style.display = list.style.display === 'block' ? 'none' : 'block';
+        }
+        window.onclick = function(event) {
+            if (!event.target.closest('.theme-dropdown')) {
+                document.getElementById('theme-list').style.display = 'none';
+            }
+        }
+        window.onload = function() {
+            const saved = localStorage.getItem('theme');
+            const idx = themes.findIndex(t => t.name === saved);
+            currentTheme = idx >= 0 ? idx : 0;
+            document.body.className = themes[currentTheme].class;
+            document.getElementById('theme-icon').textContent = themes[currentTheme].icon;
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>D Vinay</h1>
+        <nav>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li class="theme-dropdown">
+                    <button class="theme-toggle" onclick="toggleThemeDropdown(event)" aria-label="Select Theme">
+                        <span id="theme-icon">🌙</span>
+                    </button>
+                    <ul class="theme-list" id="theme-list" style="display:none;">
+                        <li onclick="setTheme(0)"><span>🌙</span> Light</li>
+                        <li onclick="setTheme(1)"><span>☀️</span> Dark</li>
+                        <li onclick="setTheme(2)"><span>💧</span> Blue</li>
+                        <li onclick="setTheme(3)"><span>🌿</span> Green</li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="hero">
+            <div class="column">
+                <img src="assets/product.jpg" alt="Awesome Product main view" class="product-img"><!-- Improved alt text -->
+            </div>
+            <div class="column">
+                <h2>Welcome to the Future of Productivity!</h2>
+                <p>Discover the features and benefits of our amazing product.</p>
+                <a href="#contact" class="cta-btn">Buy Now</a>
+            </div>
+        </section>
+        <section id="features">
+            <h2>Features</h2>
+            <div class="features-row">
+                <div class="feature-col">
+                    <h3>Feature 1</h3>
+                    <p>Lightning-fast performance ensures your tasks are completed in record time, boosting your productivity every day.</p>
+                </div>
+                <div class="feature-col">
+                    <h3>Feature 2</h3>
+                    <p>Intuitive and user-friendly interface designed for all skill levels, making it easy to get started and stay organized.</p>
+                </div>
+                <div class="feature-col">
+                    <h3>Feature 3</h3>
+                    <p>Seamless integration with your favorite tools and platforms, so you can work smarter, not harder.</p>
+                </div>
+            </div>
+        </section>
+        <section id="about">
+            <h2>About Us</h2>
+            <p>We are passionate about building products that make your life easier.</p>
+        </section>
+        <section id="contact">
+            <h2>Contact</h2>
+            <form onsubmit="event.target.querySelector('button').textContent='Sending...';">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message" required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 D Vinay. All rights reserved.</p>
+    </footer>
+</body>
+</html>
